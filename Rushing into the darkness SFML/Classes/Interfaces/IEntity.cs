@@ -16,7 +16,9 @@ namespace Rushing_into_the_darkness_SFML.Classes
 
         Sprite EntitySprite { get; }
 
-        //void Move(EntityMenager eMenager, Keyboard.Key);
+        void MoveEntity(EntityMenager eMenager);
+
+        void CollisionOccure(EntityMenager eMenager, Keyboard.Key lastkey);
 
         Vector2f GetCords();
 
@@ -26,6 +28,5 @@ namespace Rushing_into_the_darkness_SFML.Classes
 
         CollidersTags collider { get; }
 
-        //void CollisionOccure(EntityMenager eMenager, ref bool left, ref bool right, ref bool up, ref bool down);
     }
 }

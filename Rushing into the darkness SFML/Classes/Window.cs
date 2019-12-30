@@ -20,19 +20,28 @@ namespace Rushing_into_the_darkness_SFML
         private RenderWindow render;
         Clock _timer;
         int fpsc = 0;
+        const int mWidth = 11;
+        const int mHeight = 6;
 
+        Player ePlayer;
 
-        Player ePlayer = new Player();
+        EntityMenager eMenager;
 
-        EntityMenager eMenager = new EntityMenager();
+        Map_Meneger mMeneger;
 
 
         public Window(RenderWindow Target)
         {
+            ePlayer = new Player();
+            eMenager = new EntityMenager();
+            mMeneger = new Map_Meneger(eMenager);
+
+
             render = Target;
             render.KeyPressed += Render_KeyPressed;
             //render.KeyReleased += Render_KeyReleased;
             render.Resized += Render_Resized;
+
 
             _timer = new Clock();
 
@@ -50,7 +59,14 @@ namespace Rushing_into_the_darkness_SFML
             };
 
 
-            
+            mMeneger.CreateMap(new char[mWidth * mHeight] { 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w','w',
+                                                  'w', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b','b', 'w',
+                                                  'w', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b','b', 'w',
+                                                  'w', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b','b', 'w',
+                                                  'w', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b','b', 'w',
+                                                  'w', 'w', 'w', 'w','w', 'b', 'w', 'w', 'w', 'w', 'w',});
+
+            //klasa mapy (wysokosc szerokosc MapCharacters)
 
             while (render.IsOpen)
             {
@@ -69,10 +85,10 @@ namespace Rushing_into_the_darkness_SFML
                 //nie wywoływac jezeli nic nie kliknięte
 
 
-                ePlayer.Move(eMenager);
+                ePlayer.MoveEntity(eMenager);
                 
 
-                this.render.Clear(SFML.Graphics.Color.Green);
+                //this.render.Clear(SFML.Graphics.Color.Green);
 
                 //Draw
                 #region Raindbow
@@ -98,6 +114,8 @@ namespace Rushing_into_the_darkness_SFML
 
                 //draw things
 
+                //drawing map
+                mMeneger.DrawMap(render);
 
                 //rect.Draw(render, RenderStates.Default);
 
@@ -135,8 +153,6 @@ namespace Rushing_into_the_darkness_SFML
             if (int_value < 256)
             {
                 // Red to yellow. (255, 0, 0) to (255, 255, 0).
-                
-                 
                 return new SFML.Graphics.Color(255, (byte)int_value, 0);
             }
             else if (int_value < 512)

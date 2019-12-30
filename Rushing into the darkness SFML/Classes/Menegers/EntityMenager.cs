@@ -27,14 +27,22 @@ namespace Rushing_into_the_darkness_SFML.Classes.Menegers
 
 
         private List<IEntity> Entities = new List<IEntity>();
+
         public List<Sprite> EntitiesSpritesCollision = new List<Sprite>();
 
-
+        /// <summary>
+        /// Return list of all entities 
+        /// </summary>
+        /// <returns></returns>
         public List<IEntity> GetEntities()
         {
             return Entities;
         }
 
+        /// <summary>
+        /// Draw sprites of all entities in that menager have 
+        /// </summary>
+        /// <param name="target"></param>
         public void DrawEntities(RenderWindow target)
         {
             foreach (IEntity x in Entities)

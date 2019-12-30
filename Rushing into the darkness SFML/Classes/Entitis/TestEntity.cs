@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Rushing_into_the_darkness_SFML.Classes.Menegers;
 using SFML.Graphics;
 using SFML.System;
+using SFML.Window;
 
 namespace Rushing_into_the_darkness_SFML.Classes.Entitis
 {
@@ -49,6 +50,16 @@ namespace Rushing_into_the_darkness_SFML.Classes.Entitis
         }
 
         public void CollisionOccure(EntityMenager eMenager, ref bool left, ref bool right, ref bool up, ref bool down)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void MoveEntity(EntityMenager eMenager)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CollisionOccure(EntityMenager eMenager, Keyboard.Key lastkey)
         {
             throw new NotImplementedException();
         }

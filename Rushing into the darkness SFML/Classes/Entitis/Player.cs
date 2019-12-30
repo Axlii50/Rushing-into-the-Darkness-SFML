@@ -16,13 +16,24 @@ namespace Rushing_into_the_darkness_SFML.Classes
         public Sprite EntitySprite { get; private set; } = new Sprite(new Texture("Resources/Player.bmp"));
         public CollidersTags collider { get; private set; } = CollidersTags.Collider;
 
+        /// <summary>
+        /// Default x = 100 y = 100
+        /// </summary>
         public Player()
         {
             EntitySprite.Position = new SFML.System.Vector2f(100,100);
         }
+        /// <summary>
+        /// Set Position of entity 
+        /// </summary>
+        /// <param name="Positon"></param>
+        public Player(Vector2f Positon)
+        {
+            EntitySprite.Position = Positon;
+        }
 
 
-        public void Move(EntityMenager eMenager)
+        public void MoveEntity(EntityMenager eMenager)
         {
             if (Keyboard.IsKeyPressed(Keyboard.Key.A))
             {
@@ -49,7 +60,7 @@ namespace Rushing_into_the_darkness_SFML.Classes
             }
         }
 
-        private void CollisionOccure(EntityMenager eMenager, Keyboard.Key lastkey)
+        public void CollisionOccure(EntityMenager eMenager, Keyboard.Key lastkey)
         {
             var playerbounds = EntitySprite.GetGlobalBounds();
 
