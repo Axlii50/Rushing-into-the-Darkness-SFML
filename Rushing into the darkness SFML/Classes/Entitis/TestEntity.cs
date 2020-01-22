@@ -24,32 +24,9 @@ namespace Rushing_into_the_darkness_SFML.Classes.Entitis
 
             EntitySprite.Position = new Vector2f(r.Next(1, 800), r.Next(1, 600));
         }
+
+
         public Vector2f GetCords()
-        {
-            throw new NotImplementedException();
-        }
-
-        public float getCordsX()
-        {
-            throw new NotImplementedException();
-        }
-
-        public float GetCrodsY()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Move()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Move(EntityMenager eMenager)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void CollisionOccure(EntityMenager eMenager, ref bool left, ref bool right, ref bool up, ref bool down)
         {
             throw new NotImplementedException();
         }
@@ -59,7 +36,32 @@ namespace Rushing_into_the_darkness_SFML.Classes.Entitis
             throw new NotImplementedException();
         }
 
-        public void CollisionOccure(EntityMenager eMenager, Keyboard.Key lastkey)
+        public void CollisionOccureKey(EntityMenager eMenager, Keyboard.Key lastkey)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CollisionOccureWay(EntityMenager eMenager, int way)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Collision_l(EntityMenager eMenager)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Collision_r(EntityMenager eMenager)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Collision_u(EntityMenager eMenager)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Collision_d(EntityMenager eMenager)
         {
             throw new NotImplementedException();
         }

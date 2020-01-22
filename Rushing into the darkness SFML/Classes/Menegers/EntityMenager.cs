@@ -16,16 +16,17 @@ namespace Rushing_into_the_darkness_SFML.Classes.Menegers
     class EntityMenager
     {
 
-        public EntityMenager()
+        public EntityMenager(Player p)
         {
-            this.AddEntity(new TestEntity());
+            _Player = p;
+            this.AddEntity(new Enemy());
             //this.AddEntity(new TestEntity());
             //this.AddEntity(new TestEntity());
             //this.AddEntity(new TestEntity());
         }
 
 
-
+        public Player _Player;
         private List<IEntity> Entities = new List<IEntity>();
 
         public List<Sprite> EntitiesSpritesCollision = new List<Sprite>();
@@ -48,11 +49,20 @@ namespace Rushing_into_the_darkness_SFML.Classes.Menegers
             foreach (IEntity x in Entities)
                 x.EntitySprite.Draw(target, RenderStates.Default);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Entity"></param>
         public void AddEntity(IEntity Entity)
         {
             Entities.Add(Entity);
             if (Entity.collider == CollidersTags.Collider)
                 EntitiesSpritesCollision.Add(Entity.EntitySprite);
+        }
+        public void MoveEntity()
+        {
+            foreach (IEntity x in Entities)
+                x.MoveEntity(this);
         }
     }
 }

@@ -17,11 +17,10 @@ namespace Rushing_into_the_darkness_SFML
     class Window
     {
         const string wName = "Rushing Into The Darkness";
+        View ViewPoint;
         private RenderWindow render;
         Clock _timer;
-        int fpsc = 0;
-        const int mWidth = 11;
-        const int mHeight = 6;
+        int fps_c = 0;
 
         Player ePlayer;
 
@@ -30,12 +29,17 @@ namespace Rushing_into_the_darkness_SFML
         Map_Meneger mMeneger;
 
 
+        Camera _camera;
+
         public Window(RenderWindow Target)
         {
-            ePlayer = new Player();
-            eMenager = new EntityMenager();
+            _camera = new Camera();
+            ViewPoint = new View(new FloatRect(0, 0, 400, 250));
+            ePlayer = new Player(_camera, ViewPoint);
+            eMenager = new EntityMenager(ePlayer);
             mMeneger = new Map_Meneger(eMenager);
-
+            
+            
 
             render = Target;
             render.KeyPressed += Render_KeyPressed;
@@ -48,24 +52,12 @@ namespace Rushing_into_the_darkness_SFML
             int wid = (int)render.Size.X;
             int hgt = (int)render.Size.Y;
             int hgt2 = (int)(hgt / 2);
-            int x = 0;
-            bool inc = true;
+
+            Target.SetView(ViewPoint);
 
 
-            RectangleShape rect = new RectangleShape(new Vector2f(wid, hgt))
-            {
-                //Position = new Vector2f(wid, hgt)
-                //Position = new Vector2f(render.Size.X / 2 + 50, render.Size.Y / 2 + 50)
-            };
-
-
-            mMeneger.CreateMap(new char[mWidth * mHeight] { 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w','w',
-                                                  'w', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b','b', 'w',
-                                                  'w', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b','b', 'w',
-                                                  'w', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b','b', 'w',
-                                                  'w', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b','b', 'w',
-                                                  'w', 'w', 'w', 'w','w', 'b', 'w', 'w', 'w', 'w', 'w',});
-
+            RectangleShape rect = new RectangleShape(new Vector2f(1, 1));
+            rect.FillColor = SFML.Graphics.Color.Black;
             //klasa mapy (wysokosc szerokosc MapCharacters)
 
             while (render.IsOpen)
@@ -75,55 +67,39 @@ namespace Rushing_into_the_darkness_SFML
                 #region Fps
                 if (_timer.ElapsedTime.AsMilliseconds() > 250)
                 {
-                    render.SetTitle(wName + ":" + fpsc * 4);
-                    fpsc = 0;
+                    render.SetTitle(wName + ":" + fps_c * 4);
+                    fps_c = 0;
                     _timer.Restart();
                 }
                 #endregion
 
                 //move actions
-                //nie wywoływac jezeli nic nie kliknięte
 
-
+                
                 ePlayer.MoveEntity(eMenager);
+                eMenager.MoveEntity();
                 
 
-                //this.render.Clear(SFML.Graphics.Color.Green);
+                this.render.Clear(SFML.Graphics.Color.Green);
 
+
+                Target.SetView(ViewPoint);
                 //Draw
-                #region Raindbow
-                if (true)
-                {
-                    if (inc)
-                        x++;
-                    else
-                        x--;
 
-                    if (x == 0)
-                        inc = true;
-                    else if (x == wid)
-                        inc = false;
-
-                    rect.FillColor = (SFML.Graphics.Color)MapRainbowColor(x, 0, wid);
-                    rect.Draw(render, RenderStates.Default);
-
-                }
-                #endregion
-
-
-
-                //draw things
-
-                //drawing map
-                mMeneger.DrawMap(render);
-
-                //rect.Draw(render, RenderStates.Default);
+                mMeneger.DrawMap(render, _camera);
 
                 eMenager.DrawEntities(render);
+
+                
+
+                //draw things
+                //rect.Position = new Vector2f(eMenager._Player.EntitySprite.Position.X, eMenager._Player.EntitySprite.Position.Y);
+                //rect.Draw(render, RenderStates.Default);
+
                 ePlayer.EntitySprite.Draw(render, RenderStates.Default);
 
                 render.Display();
-                fpsc++;
+                fps_c++;
             }
         }
 
@@ -141,38 +117,6 @@ namespace Rushing_into_the_darkness_SFML
         {
             if (e.Code == Keyboard.Key.Q)
                 eMenager.AddEntity(new TestEntity());
-        }
-
-        private SFML.Graphics.Color MapRainbowColor(float value, float red_value, float blue_value)
-        {
-            // Convert into a value between 0 and 1023.
-            int int_value = (int)(1023 * (value - red_value) /
-                (blue_value - red_value));
-
-            // Map different color bands.
-            if (int_value < 256)
-            {
-                // Red to yellow. (255, 0, 0) to (255, 255, 0).
-                return new SFML.Graphics.Color(255, (byte)int_value, 0);
-            }
-            else if (int_value < 512)
-            {
-                // Yellow to green. (255, 255, 0) to (0, 255, 0).
-                int_value -= 256;
-                return new SFML.Graphics.Color((byte)(255 - int_value), 255, 0);
-            }
-            else if (int_value < 768)
-            {
-                // Green to aqua. (0, 255, 0) to (0, 255, 255).
-                int_value -= 512;
-                return new SFML.Graphics.Color(0, 255, (byte)int_value);
-            }
-            else
-            {
-                // Aqua to blue. (0, 255, 255) to (0, 0, 255).
-                int_value -= 768;
-                return new SFML.Graphics.Color(0, (byte)(255 - int_value), 255);
-            }
         }
     }
 }

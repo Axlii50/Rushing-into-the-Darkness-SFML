@@ -18,13 +18,10 @@ namespace Rushing_into_the_darkness_SFML.Classes
 
         void MoveEntity(EntityMenager eMenager);
 
-        void CollisionOccure(EntityMenager eMenager, Keyboard.Key lastkey);
+        void CollisionOccureKey(EntityMenager eMenager, Keyboard.Key lastkey);
+        void CollisionOccureWay(EntityMenager eMenager, int way);
 
         Vector2f GetCords();
-
-        float getCordsX();
-
-        float GetCrodsY();
 
         CollidersTags collider { get; }
 

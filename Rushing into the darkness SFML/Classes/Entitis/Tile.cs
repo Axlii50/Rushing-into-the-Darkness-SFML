@@ -10,7 +10,18 @@ namespace Rushing_into_the_darkness_SFML.Classes.Entitis
 {
     class Tile
     {
-        public MapTileType TileType { get; set; }
+        public static float Factor = 1.5f;
+        public static int Size = 16;
+        public TileTypes TileType { get; set; }
         public Sprite TileTexture { get; set; }
+
+        public Tile(int x, int y,int height, int width, TileTypes type, Texture textureSprite)
+        {
+            TileTexture = new Sprite(textureSprite);
+            TileTexture.Scale = new SFML.System.Vector2f(Factor, Factor);
+            TileTexture.Position = new SFML.System.Vector2f(x, y);
+            TileTexture.TextureRect = new IntRect(0, 0, (int)(width / Factor), (int)(height / Factor));
+            TileType = type;
+        }
     }
 }
